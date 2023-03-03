@@ -33,8 +33,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if redisXR.Status.EffectiveVersion == "" {
-		redisXR.Status.EffectiveVersion = redisXR.Spec.Parameters.Service.Version
+	if _, ok := redisXR.GetAnnotations()["appcat.io/effectiveVersion"]; !ok {
+		if redisXR.ObjectMeta.Annotations == nil {
+			redisXR.ObjectMeta.Annotations = map[string]string{}
+		}
+		redisXR.ObjectMeta.Annotations["appcat.io/effectiveVersion"] = redisXR.Spec.Parameters.Service.Version
 	}
 
 	rawData, err := json.Marshal(redisXR)
@@ -43,6 +46,11 @@ func main() {
 	}
 
 	funcIO.Desired.Composite.Resource.Raw = rawData
+
+	funcIO.Results = append(funcIO.Results, xfnv1alpha1.Result{
+		Severity: xfnv1alpha1.SeverityNormal,
+		Message:  "I was reconciled",
+	})
 
 	finalYaml, err := yaml.Marshal(funcIO)
 	if err != nil {
