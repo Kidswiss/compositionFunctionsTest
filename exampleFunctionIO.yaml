@@ -1,0 +1,311 @@
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+config:
+  apiVersion: database.example.org/v1alpha1
+  kind: Config
+  metadata:
+    name: cloudsql
+  spec:
+    version: POSTGRES_9_6
+observed:
+  # The observed state of the Composite Resource.
+  composite:
+    resource:
+      apiVersion: database.example.org/v1alpha1
+      kind: XPostgreSQLInstance
+      metadata:
+        creationTimestamp: "2023-01-27T23:47:12Z"
+        finalizers:
+        - composite.apiextensions.crossplane.io
+        generateName: platform-ref-gcp-db-
+        generation: 5
+        labels:
+          crossplane.io/claim-name: platform-ref-gcp-db
+          crossplane.io/claim-namespace: default
+          crossplane.io/composite: platform-ref-gcp-db-p9wrj
+        name: platform-ref-gcp-db-p9wrj
+        resourceVersion: "6817"
+        uid: 96623f41-be2e-4eda-84d4-9668b48e284d
+      spec:
+        claimRef:
+          apiVersion: database.example.org/v1alpha1
+          kind: PostgreSQLInstance
+          name: platform-ref-gcp-db
+          namespace: default
+        compositionRef:
+          name: xpostgresqlinstances.database.example.org
+        compositionRevisionRef:
+          name: xpostgresqlinstances.database.example.org-eb6c684
+        compositionUpdatePolicy: Automatic
+        parameters:
+          storageGB: 10
+        resourceRefs:
+        - apiVersion: sql.gcp.upbound.io/v1beta1
+          kind: DatabaseInstance
+          name: platform-ref-gcp-db-p9wrj-tvvtg
+        writeConnectionSecretToRef:
+          name: 96623f41-be2e-4eda-84d4-9668b48e284d
+          namespace: upbound-system
+      status:
+        conditions:
+        - lastTransitionTime: "2023-01-27T23:47:12Z"
+          reason: ReconcileSuccess
+          status: "True"
+          type: Synced
+        - lastTransitionTime: "2023-01-28T00:09:12Z"
+          reason: Creating
+          status: "False"
+          type: Ready
+        connectionDetails:
+          lastPublishedTime: "2023-01-28T00:08:12Z"
+    # Any observed Composite Resource connection details.
+    connectionDetails:
+    - name: privateIP
+      value: 10.135.0.3
+  # The observed state of any existing Composed Resources.
+  resources:
+  - name: db-instance
+    resource:
+      apiVersion: sql.gcp.upbound.io/v1beta1
+      kind: DatabaseInstance
+      metadata:
+        annotations:
+          crossplane.io/composition-resource-name: db-instance
+          crossplane.io/external-name: platform-ref-gcp-db-p9wrj-tvvtg
+        creationTimestamp: "2023-01-27T23:47:12Z"
+        finalizers:
+        - finalizer.managedresource.crossplane.io
+        generateName: platform-ref-gcp-db-p9wrj-
+        generation: 80
+        labels:
+          crossplane.io/claim-name: platform-ref-gcp-db
+          crossplane.io/claim-namespace: default
+          crossplane.io/composite: platform-ref-gcp-db-p9wrj
+        name: platform-ref-gcp-db-p9wrj-tvvtg
+        ownerReferences:
+        - apiVersion: database.example.org/v1alpha1
+          blockOwnerDeletion: true
+          controller: true
+          kind: XPostgreSQLInstance
+          name: platform-ref-gcp-db-p9wrj
+          uid: 96623f41-be2e-4eda-84d4-9668b48e284d
+        resourceVersion: "7992"
+        uid: 43919834-fdce-427e-85d9-d03eab9501f1
+      spec:
+        forProvider:
+          databaseVersion: POSTGRES_13
+          deletionProtection: false
+          project: example
+          region: us-west2
+          settings:
+          - diskSize: 10
+            ipConfiguration:
+            - privateNetwork: projects/example/global/networks/platform-ref-gcp-cluster
+              privateNetworkRef:
+                name: platform-ref-gcp-cluster
+            tier: db-f1-micro
+        providerConfigRef:
+          name: default
+        writeConnectionSecretToRef:
+          name: 96623f41-be2e-4eda-84d4-9668b48e284d-gcp-postgresql
+          namespace: upbound-system
+      status:
+        atProvider:
+          connectionName: example:us-west2:platform-ref-gcp-db-p9wrj-tvvtg
+          firstIpAddress: 34.102.103.85
+          id: platform-ref-gcp-db-p9wrj-tvvtg
+          privateIpAddress: 10.135.0.3
+          publicIpAddress: 34.102.103.85
+          settings:
+          - version: 1
+        conditions:
+        - lastTransitionTime: "2023-01-28T00:07:30Z"
+          reason: Available
+          status: "True"
+          type: Ready
+        - lastTransitionTime: "2023-01-27T23:47:14Z"
+          reason: ReconcileSuccess
+          status: "True"
+          type: Synced
+    # Any observed composed resource connection details.
+    connectionDetails:
+    - name: privateIP
+      value: 10.135.0.3
+desired:
+  # The observed state of the Composite Resource.
+  composite:
+    resource:
+      apiVersion: database.example.org/v1alpha1
+      kind: XPostgreSQLInstance
+      metadata:
+        creationTimestamp: "2023-01-27T23:47:12Z"
+        finalizers:
+        - composite.apiextensions.crossplane.io
+        generateName: platform-ref-gcp-db-
+        generation: 5
+        labels:
+          crossplane.io/claim-name: platform-ref-gcp-db
+          crossplane.io/claim-namespace: default
+          crossplane.io/composite: platform-ref-gcp-db-p9wrj
+        name: platform-ref-gcp-db-p9wrj
+        resourceVersion: "6817"
+        uid: 96623f41-be2e-4eda-84d4-9668b48e284d
+      spec:
+        claimRef:
+          apiVersion: database.example.org/v1alpha1
+          kind: PostgreSQLInstance
+          name: platform-ref-gcp-db
+          namespace: default
+        compositionRef:
+          name: xpostgresqlinstances.database.example.org
+        compositionRevisionRef:
+          name: xpostgresqlinstances.database.example.org-eb6c684
+        compositionUpdatePolicy: Automatic
+        parameters:
+          storageGB: 10
+        resourceRefs:
+        - apiVersion: sql.gcp.upbound.io/v1beta1
+          kind: DatabaseInstance
+          name: platform-ref-gcp-db-p9wrj-tvvtg
+        writeConnectionSecretToRef:
+          name: 96623f41-be2e-4eda-84d4-9668b48e284d
+          namespace: upbound-system
+      status:
+        conditions:
+        - lastTransitionTime: "2023-01-27T23:47:12Z"
+          reason: ReconcileSuccess
+          status: "True"
+          type: Synced
+        - lastTransitionTime: "2023-01-28T00:09:12Z"
+          reason: Creating
+          status: "False"
+          type: Ready
+        connectionDetails:
+          lastPublishedTime: "2023-01-28T00:08:12Z"
+    # Any desired Composite Resource connection details. Your Composition
+    # Function can add new entries to this array and Crossplane will record them
+    # as the XR's connection details.
+    connectionDetails:
+    - name: privateIP
+      value: 10.135.0.3
+  # The desired composed resources.
+  resources:
+  # This db-instance matches the entry in observed. Functions must include any
+  # observed resources in their desired resources array. If you omit an observed
+  # resource from the desired resources array Crossplane will delete it.
+  # Crossplane will 'bootstrap' the desired state passed to the Function
+  # pipeline by copying all observed resources into the desired resources array.
+  - name: db-instance
+    resource:
+      apiVersion: sql.gcp.upbound.io/v1beta1
+      kind: DatabaseInstance
+      metadata:
+        annotations:
+          crossplane.io/composition-resource-name: DBInstance
+          crossplane.io/external-name: platform-ref-gcp-db-p9wrj-tvvtg
+        creationTimestamp: "2023-01-27T23:47:12Z"
+        finalizers:
+        - finalizer.managedresource.crossplane.io
+        generateName: platform-ref-gcp-db-p9wrj-
+        generation: 80
+        labels:
+          crossplane.io/claim-name: platform-ref-gcp-db
+          crossplane.io/claim-namespace: default
+          crossplane.io/composite: platform-ref-gcp-db-p9wrj
+        name: platform-ref-gcp-db-p9wrj-tvvtg
+        ownerReferences:
+        - apiVersion: database.example.org/v1alpha1
+          blockOwnerDeletion: true
+          controller: true
+          kind: XPostgreSQLInstance
+          name: platform-ref-gcp-db-p9wrj
+          uid: 96623f41-be2e-4eda-84d4-9668b48e284d
+        resourceVersion: "7992"
+        uid: 43919834-fdce-427e-85d9-d03eab9501f1
+      spec:
+        forProvider:
+          databaseVersion: POSTGRES_13
+          deletionProtection: false
+          project: example
+          region: us-west2
+          settings:
+          - diskSize: 10
+            ipConfiguration:
+            - privateNetwork: projects/example/global/networks/platform-ref-gcp-cluster
+              privateNetworkRef:
+                name: platform-ref-gcp-cluster
+            tier: db-f1-micro
+        providerConfigRef:
+          name: default
+        writeConnectionSecretToRef:
+          name: 96623f41-be2e-4eda-84d4-9668b48e284d-gcp-postgresql
+          namespace: upbound-system
+      status:
+        atProvider:
+          connectionName: example:us-west2:platform-ref-gcp-db-p9wrj-tvvtg
+          firstIpAddress: 34.102.103.85
+          id: platform-ref-gcp-db-p9wrj-tvvtg
+          privateIpAddress: 10.135.0.3
+          publicIpAddress: 34.102.103.85
+          settings:
+          - version: 1
+        conditions:
+        - lastTransitionTime: "2023-01-28T00:07:30Z"
+          reason: Available
+          status: "True"
+          type: Ready
+        - lastTransitionTime: "2023-01-27T23:47:14Z"
+          reason: ReconcileSuccess
+          status: "True"
+          type: Synced
+  # This db-user is a desired composed resource that doesn't yet exist. This
+  # Composition Function is requesting it be created.
+  - name: db-user
+    resource:
+      apiVersion: sql.gcp.upbound.io/v1beta1
+      kind: User
+      metadata:
+        annotations:
+          crossplane.io/composition-resource-name: db-user
+          crossplane.io/external-name: platform-ref-gcp-db-p9wrj-z8lpz
+        creationTimestamp: "2023-01-27T23:47:12Z"
+        finalizers:
+        - finalizer.managedresource.crossplane.io
+        generateName: platform-ref-gcp-db-p9wrj-
+        generation: 115
+        labels:
+          crossplane.io/claim-name: platform-ref-gcp-db
+          crossplane.io/claim-namespace: default
+          crossplane.io/composite: platform-ref-gcp-db-p9wrj
+        name: platform-ref-gcp-db-p9wrj-z8lpz
+        ownerReferences:
+        - apiVersion: database.example.org/v1alpha1
+          blockOwnerDeletion: true
+          controller: true
+          kind: XPostgreSQLInstance
+          name: platform-ref-gcp-db-p9wrj
+          uid: 96623f41-be2e-4eda-84d4-9668b48e284d
+        resourceVersion: "9951"
+        uid: ab5dafbe-2bc8-47ea-8b5b-9bcb40183e45
+      spec:
+        forProvider:
+          instance: platform-ref-gcp-db-p9wrj-tvvtg
+          project: example
+        providerConfigRef:
+          name: default
+    # Any desired connection details for the new db-user composed resource.
+    # Desired connection details can be FromValue, FromFieldPath, or
+    # FromConnectionSecretKey, just like their P&T Composition equivalents.
+    connectionDetails:
+    - name: password
+      type: FromValue
+      value: very-secret
+    # Any desired readiness checks for the new db-user composed resource.
+    # Desired readiness checks can be NonEmpty, MatchString, MatchInteger, or
+    # None, just like their P&T Composition equivalents.
+    readinessChecks:
+    - type: None
+# An optional array of results.
+results:
+- severity: Normal
+  message: "Successfully composed GCP SQL user"
