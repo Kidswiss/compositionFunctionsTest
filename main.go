@@ -2,10 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
 	xfnv1alpha1 "github.com/crossplane/crossplane/apis/apiextensions/fn/io/v1alpha1"
+	"sigs.k8s.io/yaml"
+
 	// redisV1 "github.com/vshn/component-appcat/apis/vshn/v1"
 	redisV1 "xfnTest/redis"
 )
@@ -13,7 +17,12 @@ import (
 func main() {
 	funcIO := xfnv1alpha1.FunctionIO{}
 
-	err := json.NewDecoder(os.Stdin).Decode(&funcIO)
+	x, err := ioutil.ReadAll(os.Stdin)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = yaml.Unmarshal(x, &funcIO)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,6 +44,11 @@ func main() {
 
 	funcIO.Desired.Composite.Resource.Raw = rawData
 
-	json.NewEncoder(os.Stdout).Encode(funcIO)
+	finalYaml, err := yaml.Marshal(funcIO)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(string(finalYaml))
 
 }

@@ -23,7 +23,7 @@ spec:
     - name: myfunc
       type: Container
       container:
-        image: kidswiss/myfunc:latest
+        image: ghcr.io/kidswiss/compositionfunctionstest:latest
         imagePullPolicy: Always
   resources:
     - name: namespace
