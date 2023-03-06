@@ -23,5 +23,25 @@ observed:
             disk: "80Gi"
         writeConnectionSecretToRef:
           name: redis-creds
-
-# desired: autopopulated by crossplane
+desired:
+  composite:
+    resource:
+      apiVersion: vshn.appcat.vshn.io/v1
+      kind: VSHNRedis
+      metadata:
+        name: redis-app1-prod
+        namespace: prod-app
+      spec:
+        parameters:
+          service:
+            version: "7.0"
+            redisSettings: |
+              activedefrag yes
+          size:
+            cpuRequests: "500m"
+            cpuLimits: "1000m"
+            memoryRequests: "500Mi"
+            memoryLimits: "1Gi"
+            disk: "80Gi"
+        writeConnectionSecretToRef:
+          name: redis-creds
